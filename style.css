@@ -1,30 +1,80 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 body {
-    padding: 2rem;
+  padding: 2rem;
+  background-color: aliceblue;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 header {
-    width: 100%;
-    height: 100px;
-    background-color: pink;
-    padding: 20px;
+  width: 100%;
+  height: max-content;
+  text-align: center;
+  background-color: pink;
+  margin: 20px;
+}
+
+input {
+}
+
+main {
+  margin: 1rem;
 }
 
 .cards {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  min-height: 100vh;
+  margin-top: 1rem;
 }
 
 .card-section {
-    height: 300px;
-    border-width: 5px;
-    background-color: rgb(240, 237, 237);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  border-width: 5px;
+  background-color: rgb(240, 237, 237);
+}
+
+.breed-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  width: 200px;
+  text-align: center;
+}
+
+.breed-image-container {
+  background-color: rgb(201, 192, 192);
+  border-radius: 50%;
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.breed-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+.breed-name {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+footer p {
+  font-style: italic;
+  text-align: center;
 }
