@@ -1,77 +1,107 @@
 // setupPage();
 setupPage2();
 
-// async function setupPage() {   
-//     fetch("https://dog.ceo/api/breeds/list/all")
+// async function setupPage() {
+//     let dogs = await fetch("https://dog.ceo/api/breeds/list/all")
 //         .then(response => response.json())
 //         .then(data => {
 //             let breedNames = Object.keys(data.message);
-//             breedNames.forEach(breed => {
-//                 fetch(`https://dog.ceo/api/breed/${breed}/images`)
-//                     .then(response => response.json())
-//                     .then(data => {
-//                         let dogs = data.message;
-//                         let cardsContainer = document.querySelector('.download-cards');
-//                         let card = document.createElement('div');
-//                         card.innerHTML = `
-//                             <section class="card-section">
-//                                 <article class="breed-card">
-//                                     <figure">
-//                                         <img class="breed-image" src="${dogs[Math.floor(Math.random() * dogs.length)]}" alt="breed's image">
-//                                     </figure>
-//                                     <h3 class="breed-name">Breed: ${breed}</h3>
-//                                 </article>
-//                             </section>
-//                         `;
-//                         cardsContainer.appendChild(card);
-//                         search_2(dogs);
-//                 })    
-//             })
+//             return Promise.all(breedNames.map(async breed => {
+//                 let response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
+//                 let data = await response.json();
+//                 return { breed, images: data.message };
+//             }));
 //         })
 //         .catch((e) => console.log(e));
+
+//     let cardsContainer = document.querySelector('.download-cards');
+//     let inputRef = document.querySelector('#breedFilter');
+
+//     inputRef.addEventListener('input', () => {
+//         let filter = inputRef.value.toLowerCase();
+//         let filteredDogs = dogs.filter(dog => dog.breed.includes(filter));
+//         displayFilteredResults(filteredDogs);
+//     });
+
+//     function displayFilteredResults(filteredDogs) {
+
+//         cardsContainer.innerHTML = ''; // clear existing cards
+
+//         filteredDogs.forEach(dog => {
+//             let card = document.createElement('div');
+//             card.innerHTML = `
+//                 <section class="card-section">
+//                     <article class="breed-card">
+//                         <figure">
+//                             <img class="breed-image" src="${dog.images[Math.floor(Math.random() * dog.images.length)]}" alt="breed's image">
+//                         </figure>
+//                         <h3 class="breed-name">Breed: ${dog.breed}</h3>
+//                     </article>
+//                 </section>
+//             `;
+//             cardsContainer.appendChild(card);
+//         });
+//     }
+
+//     displayFilteredResults(dogs);
 // }
 
 async function setupPage2() {
-    let dogs = await fetch("https://dog.ceo/api/breeds/list/all")
-        .then(response => response.json())
-        .then(data => {
-            let breedNames = Object.keys(data.message);
-            return Promise.all(breedNames.map(async breed => {
-                let response = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
-                let data = await response.json();
-                return { breed, images: data.message };
-            }));
-        })
-        .catch((e) => console.log(e));
+    const dogsPromise = fetchDogData(); // Initiate the fetch operation
+    const cardsContainer = document.querySelector('.download-cards');
+    const inputRef = document.querySelector('#breedFilter');
 
-    let cardsContainer = document.querySelector('.download-cards');
-    let inputRef = document.querySelector('#breedFilter');
-
-    inputRef.addEventListener('input', () => {
-        let filter = inputRef.value.toLowerCase();
-        let filteredDogs = dogs.filter(dog => dog.breed.includes(filter));
-        displayFilteredResults(filteredDogs);
+    inputRef.addEventListener('input', e => {
+        const filter = inputRef.value.toLowerCase();
+        dogsPromise.then(dogs => {
+            const filteredDogs = filterDogs(dogs, filter);
+            displayFilteredResults(filteredDogs, cardsContainer);
+        });
     });
 
-    function displayFilteredResults(filteredDogs) {
+    // Initial display of all dogs
+    dogsPromise.then(dogs => {
+        displayFilteredResults(dogs, cardsContainer);
+    });
+}
 
-        cardsContainer.innerHTML = ''; // clear existing cards
+async function fetchDogData() {
+    const response = await fetch("https://dog.ceo/api/breeds/list/all");
+    const data = await response.json();
+    const breedNames = Object.keys(data.message);
+    const dogPromises = breedNames.map(async breed => {
+        const imageResponse = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
+        const imageData = await imageResponse.json();
+        return { breed, images: imageData.message };
+    });
 
-        filteredDogs.forEach(dog => {
-            let card = document.createElement('div');
-            card.innerHTML = `
-                <section class="card-section">
-                    <article class="breed-card">
-                        <figure">
-                            <img class="breed-image" src="${dog.images[Math.floor(Math.random() * dog.images.length)]}" alt="breed's image">
-                        </figure>
-                        <h3 class="breed-name">Breed: ${dog.breed}</h3>
-                    </article>
-                </section>
-            `;
-            cardsContainer.appendChild(card);
-        });
-    }
+    return Promise.all(dogPromises); // Execute all fetch operations in parallel
+}
 
-    displayFilteredResults(dogs);
+function filterDogs(dogs, filter) {
+    return dogs.filter(dog => dog.breed.includes(filter));
+}
+
+function displayFilteredResults(filteredDogs, container) {
+    container.innerHTML = '';
+
+    filteredDogs.forEach(dog => {
+        const card = createBreedCard(dog);
+        container.appendChild(card);
+    });
+}
+
+function createBreedCard(dog) {
+    const card = document.createElement('div');
+    card.innerHTML = `
+        <section class="card-section">
+            <article class="breed-card">
+                <figure>
+                    <img class="breed-image" src="${dog.images[Math.floor(Math.random() * dog.images.length)]}" alt="breed's image">
+                </figure>
+                <h3 class="breed-name">Breed: ${dog.breed}</h3>
+            </article>
+        </section>
+    `;
+    return card;
 }
