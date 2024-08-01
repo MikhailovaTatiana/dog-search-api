@@ -10,15 +10,13 @@ body {
 }
 
 header {
-  width: 100%;
   height: max-content;
   text-align: center;
   background-color: pink;
-  margin: 20px;
 }
 
-main {
-  margin: 1rem;
+.search-section {
+  margin-top: 1rem;;
 }
 
 .download-cards {
@@ -27,7 +25,7 @@ main {
   grid-template-rows: auto;
   min-height: 100vh;
   margin-top: 1rem;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 .card-section {
@@ -48,17 +46,6 @@ main {
   text-align: center;
 }
 
-.breed-image-container {
-  /* background-color: rgb(201, 192, 192);
-  border-radius: 50%;
-  width: 100%;
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.5rem; */
-}
-
 .breed-image {
   width: 100%;
   aspect-ratio: 1;
@@ -69,10 +56,10 @@ main {
 
 .breed-name {
   font-size: 1.2rem;
-  margin: 0;
 }
 
 footer p {
   font-style: italic;
   text-align: center;
+  margin-top: 2rem;
 }
