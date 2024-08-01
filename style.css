@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    padding: 2rem;
+}
+
+header {
+    width: 100%;
+    height: 100px;
+    background-color: pink;
+    padding: 20px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-height: 100vh;
+}
+
+.card-section {
+    height: 300px;
+    border-width: 5px;
+    background-color: rgb(240, 237, 237);
+}
