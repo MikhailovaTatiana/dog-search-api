@@ -1,10 +1,12 @@
 # dog-search-api
 
-<figure>
-    <img width="100%" alt="wireframe" src="./project-scetch.png">
-</figure>
+Live link: https://mikhailovatatiana.github.io/dog-search-api/
 
 ## PROJECT STEPS:
+
+<figure>
+    <img width="100%" alt="scetch" src="./project-scetch.png">
+</figure>
  
 1. ### Set Up the Project
 
@@ -50,3 +52,12 @@ Open index.html in a web browser to test the dog gallery.
 Refine CSS for better styling.
 
 Enhance JavaScript for better functionality, such as error handling and loading indicators.
+
+## RESULT:
+
+<figure>
+    <img width="100%" alt="search" src="./filter-page.png">
+</figure>
+<figure>
+    <img width="100%" alt="result" src="./main-page.png">
+</figure>
